@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClimateForge™ — Smart HVAC, Better Value</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --cf-red:    #c8202a;
+  --cf-red2:   #a01820;
+  --cf-blue:   #1a4a8a;
+  --cf-blue2:  #0e3060;
+  --cf-blue-lt:#2a6abf;
+  --navy:      #1a2540;
+  --navy2:     #111a30;
+  --snow:      #f4f8fc;
+  --white:     #ffffff;
+  --gray-50:   #f8fafc;
+  --gray-100:  #f0f4f8;
+  --gray-200:  #e2e8f0;
+  --gray-400:  #94a3b8;
+  --gray-600:  #475569;
+  --gray-800:  #1e293b;
+  --shadow:    0 2px 12px rgba(26,37,64,.10), 0 8px 32px rgba(26,37,64,.08);
+  --shadow-lg: 0 4px 24px rgba(26,37,64,.15), 0 16px 48px rgba(26,37,64,.12);
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--snow);
+  color: var(--gray-800);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── PAGE SYSTEM ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+.site-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--navy2);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  box-shadow: 0 2px 20px rgba(0,0,0,.3);
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center;
+  padding: 0 24px; height: 64px; gap: 8px;
+}
+
+/* dual brand logos */
+.nav-brands {
+  display: flex; align-items: center; gap: 0; margin-right: 16px;
+}
+.nav-brand-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 6px;
+  cursor: pointer; border: none; background: transparent;
+  transition: background 0.15s;
+}
+.nav-brand-btn:hover { background: rgba(255,255,255,.07); }
+.nav-brand-btn img { height: 32px; width: auto; object-fit: contain; mix-blend-mode: screen; }
+.nav-divider {
+  width: 1px; height: 28px;
+  background: rgba(255,255,255,.15); margin: 0 4px;
+}
+
+/* nav links */
+.nav-links {
+  display: flex; align-items: center; gap: 2px; flex: 1;
+}
+.nav-link {
+  padding: 6px 14px; border-radius: 5px;
+  font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,.7);
+  cursor: pointer; border: none; background: transparent;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.nav-link:hover, .nav-link.active {
+  color: #fff; background: rgba(255,255,255,.08);
+}
+.nav-link.active { color: #7ec8f5; }
+
+.nav-cta {
+  margin-left: auto;
+  background: var(--cf-red);
+  color: #fff; border: none; border-radius: 6px;
+  padding: 9px 20px; font-family: 'Inter', sans-serif;
+  font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s; white-space: nowrap;
+}
+.nav-cta:hover { background: var(--cf-red2); }
+
+/* ══════════════════════════════════
+   HOME PAGE
+══════════════════════════════════ */
+.home-hero {
+  background: linear-gradient(135deg, var(--navy2) 0%, #1e2e50 60%, #162040 100%);
+  position: relative; overflow: hidden;
+  padding: 80px 24px 70px;
+  text-align: center;
+}
+.home-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(200,32,42,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.home-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 20% 0%, rgba(26,74,138,.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: #7ec8f5; margin-bottom: 18px; position: relative;
+}
+.hero-h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700; color: #fff;
+  line-height: 1.1; margin-bottom: 16px;
+  letter-spacing: -0.01em; position: relative;
+}
+.hero-h1 span { color: #f47c7c; }
+.hero-sub {
+  font-size: 1rem; color: #8fa8c8;
+  max-width: 560px; margin: 0 auto 36px;
+  line-height: 1.7; position: relative;
+}
+.hero-btns {
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap; position: relative; margin-bottom: 56px;
+}
+.hero-btn {
+  padding: 13px 28px; border-radius: 7px;
+  font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.15s;
+}
+.hero-btn.primary { background: var(--cf-red); color: #fff; box-shadow: 0 4px 20px rgba(200,32,42,.4); }
+.hero-btn.primary:hover { background: var(--cf-red2); box-shadow: 0 6px 28px rgba(200,32,42,.5); }
+.hero-btn.secondary { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+.hero-btn.secondary:hover { background: rgba(255,255,255,.16); }
+
+/* dual brand hero cards */
+.hero-brands {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 16px; max-width: 860px; margin: 0 auto;
+  position: relative;
+}
+.hero-brand-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; padding: 28px 24px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.hero-brand-card:hover {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.22);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+}
+.hero-brand-card img { height: 44px; width: auto; object-fit: contain; }
+.hero-brand-label {
+  font-size: 0.75rem; color: #8fa8c8;
+  text-align: center; line-height: 1.5;
+}
+.hero-brand-label strong { display: block; color: #c8d8f0; font-size: 0.82rem; margin-bottom: 2px; }
+.hero-brand-arrow {
+  font-size: 0.8rem; color: var(--cf-red);
+  font-weight: 600; letter-spacing: 0.04em;
+}
+.hero-vs {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px;
+}
+.vs-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: #8fa8c8;
+}
+
+/* category grid */
+.categories {
+  max-width: 1280px; margin: 0 auto; padding: 56px 24px;
+}
+.section-hdr { text-align: center; margin-bottom: 36px; }
+.section-eyebrow {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cf-blue-lt); margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2rem; font-weight: 700;
+  color: var(--navy); letter-spacing: -0.01em;
+}
+.section-sub { color: var(--gray-600); font-size: 0.9rem; margin-top: 6px; }
+
+.cat-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.cat-card {
+  background: #fff; border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  padding: 28px 20px 24px;
+  text-align: center; cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.cat-card:hover {
+  box-shadow: var(--shadow);
+  border-color: #b8d0f0;
+  transform: translateY(-2px);
+}
+.cat-icon {
+  width: 64px; height: 64px; border-radius: 12px;
+  background: var(--gray-100); margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+}
+.cat-card:nth-child(1) .cat-icon { background: #eef4ff; }
+.cat-card:nth-child(2) .cat-icon { background: #fff0f0; }
+.cat-card:nth-child(3) .cat-icon { background: #f0fff4; }
+.cat-card:nth-child(4) .cat-icon { background: #fff8ec; }
+.cat-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700; font-size: 1rem;
+  color: var(--navy); margin-bottom: 4px;
+}
+.cat-desc { font-size: 0.75rem; color: var(--gray-600); line-height: 1.5; }
+
+/* why section */
+.why-section {
+  background: var(--navy2); padding: 64px 24px;
+}
+.why-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+}
+.why-text .section-eyebrow { color: #7ec8f5; }
+.why-text .section-title { color: #fff; margin-bottom: 20px; }
+.why-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.why-item {
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.why-dot {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(200,32,42,.2); border: 1px solid rgba(200,32,42,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; color: #f47c7c; margin-top: 2px;
+}
+.why-item-text strong { display: block; color: #c8d8f0; font-size: 0.9rem; margin-bottom: 2px; }
+.why-item-text span { color: #6888a8; font-size: 0.8rem; }
+.why-img-col { display: flex; flex-direction: column; gap: 12px; }
+.why-img-box {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+  padding: 20px; text-align: center; color: #6888a8;
+  font-size: 0.8rem;
+}
+.why-img-box img { border-radius: 8px; margin: 0 auto; }
+
+/* ══════════════════════════════════
+   SHOP / COMPARE PAGE
+══════════════════════════════════ */
+.shop-hero {
+  background: linear-gradient(135deg, var(--navy2), #1e3060);
+  padding: 48px 24px 40px; text-align: center;
+}
+.shop-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.4rem; font-weight: 700; color: #fff;
+  margin-bottom: 8px;
+}
+.shop-hero h1 span { color: #f47c7c; }
+.shop-hero p { color: #8fa8c8; font-size: 0.92rem; }
+
+.shop-col-hdr {
+  display: grid; grid-template-columns: 1fr 1fr;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 24px;
+}
+.col-label {
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 3px solid;
+}
+.col-label.mrcool { border-color: var(--cf-blue); background: #f0f5ff; }
+.col-label.cf { border-color: var(--cf-red); background: #fff5f5; border-left: 1px solid var(--gray-200); }
+.col-label img { height: 28px; width: auto; object-fit: contain; mix-blend-mode: multiply; }
+.col-label-text { font-size: 0.72rem; color: var(--gray-600); }
+.col-label-text strong { display: block; font-size: 0.82rem; color: var(--gray-800); }
+
+.shop-models {
+  max-width: 1280px; margin: 0 auto;
+  padding: 20px 24px 60px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.model-divider {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray-400); padding: 8px 0 2px;
+  border-top: 1px solid var(--gray-200); margin-top: 6px;
+}
+
+.model-pair {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.m-card {
+  background: #fff; border-radius: 10px;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  display: flex; flex-direction: column;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.m-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.m-card.cf-card { border-color: #f0c8c8; background: #fffafa; }
+
+.m-card-top {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.mrcool .m-card-top { background: #f8fbff; border-left: 3px solid var(--cf-blue); }
+.cf-card .m-card-top { background: #fff8f8; border-left: 3px solid var(--cf-red); }
+
+.m-img {
+  width: 76px; height: 62px; flex-shrink: 0;
+  background: var(--gray-100); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; border: 1px solid var(--gray-200);
+}
+.m-img img { width: 68px; height: 55px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,.1)); }
+
+.m-title { flex: 1; }
+.m-btu {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700; font-size: 1rem; color: var(--navy);
+}
+.m-sub { font-size: 0.7rem; color: var(--gray-400); margin-top: 1px; }
+
+.m-price { text-align: right; flex-shrink: 0; }
+.m-was { font-size: 0.7rem; text-decoration: line-through; color: var(--gray-400); display: block; }
+.m-now { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; display: block; }
+.mrcool .m-now { color: var(--cf-blue); }
+.cf-card .m-now { color: var(--cf-red); }
+.m-type { font-size: 0.62rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: .07em; }
+.m-save {
+  display: inline-block; margin-top: 3px;
+  background: var(--cf-red); color: #fff;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 2px 7px; border-radius: 20px;
+}
+
+.m-body { padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.m-specs { display: flex; flex-direction: column; }
+.m-spec {
+  display: flex; justify-content: space-between;
+  padding: 4px 0; border-bottom: 1px solid var(--gray-100);
+  font-size: 0.76rem;
+}
+.m-spec:last-child { border-bottom: none; }
+.m-spec-k { color: var(--gray-600); }
+.m-spec-v { font-weight: 600; color: var(--gray-800); }
+.m-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.m-tag {
+  font-size: 0.62rem; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+}
+.mrcool .m-tag { background: #eef4ff; color: var(--cf-blue2); border: 1px solid #c8dcff; }
+.cf-card .m-tag { background: #fff0f0; color: var(--cf-red2); border: 1px solid #ffcaca; }
+
+.m-foot { padding: 0 16px 14px; }
+.m-btn {
+  display: block; width: 100%;
+  padding: 9px 14px; border-radius: 6px; border: none;
+  font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; text-align: center; text-decoration: none;
+  transition: all 0.15s;
+}
+.btn-mrcool { background: #eef4ff; color: var(--cf-blue2); border: 1px solid #c8dcff; }
+.btn-mrcool:hover { background: #deeaff; }
+.btn-cf { background: var(--cf-red); color: #fff; box-shadow: 0 2px 10px rgba(200,32,42,.25); }
+.btn-cf:hover { background: var(--cf-red2); box-shadow: 0 4px 16px rgba(200,32,42,.35); }
+
+/* ══════════════════════════════════
+   COMPARE PAGE (brand vs brand)
+══════════════════════════════════ */
+.compare-hero {
+  background: linear-gradient(135deg, var(--navy2) 0%, #1a2e60 100%);
+  padding: 56px 24px 0; text-align: center; overflow: hidden;
+}
+.compare-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.6rem; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.compare-hero p { color: #8fa8c8; font-size: 0.92rem; margin-bottom: 40px; }
+.compare-units {
+  display: flex; justify-content: center; align-items: flex-end; gap: 40px;
+  position: relative;
+}
+.compare-unit { text-align: center; }
+.compare-unit img { height: 160px; width: auto; object-fit: contain; margin: 0 auto; filter: drop-shadow(0 8px 24px rgba(0,0,0,.4)); }
+.compare-unit-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700; font-size: 0.9rem; color: #c8d8f0;
+  margin-top: 12px; padding-bottom: 16px;
+}
+.compare-vs-badge {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--cf-red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem;
+  box-shadow: 0 4px 20px rgba(200,32,42,.5);
+  margin-bottom: 8px; flex-shrink: 0;
+}
+
+/* comparison table */
+.compare-table-wrap {
+  max-width: 900px; margin: 0 auto; padding: 40px 24px 60px;
+}
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
+}
+.compare-table thead th {
+  padding: 18px 24px; text-align: center;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem;
+}
+.compare-table thead th:first-child { text-align: left; background: #f8fafc; }
+.compare-table thead th.mc-hdr { background: #eef4ff; color: var(--cf-blue2); }
+.compare-table thead th.cf-hdr { background: #fff0f0; color: var(--cf-red2); }
+.compare-table thead th img { height: 24px; width: auto; margin: 0 auto 6px; mix-blend-mode: multiply; }
+.compare-table tbody tr { border-top: 1px solid var(--gray-100); }
+.compare-table tbody tr:nth-child(even) td { background: #fafbfc; }
+.compare-table tbody tr:nth-child(even) td.mc-col { background: #f5f8ff; }
+.compare-table tbody tr:nth-child(even) td.cf-col { background: #fff8f8; }
+.compare-table td {
+  padding: 13px 24px; font-size: 0.83rem;
+}
+.compare-table td:first-child { color: var(--gray-600); font-weight: 500; }
+.compare-table td.mc-col, .compare-table td.cf-col {
+  text-align: center; font-weight: 600; color: var(--gray-800);
+}
+.check { color: #16a34a; font-size: 1rem; }
+.cross { color: var(--cf-red); font-size: 1rem; }
+.tag-good {
+  display: inline-block; background: #dcfce7; color: #166534;
+  font-size: 0.7rem; font-weight: 600; padding: 2px 9px; border-radius: 20px;
+}
+.tag-warn {
+  display: inline-block; background: #fef9c3; color: #854d0e;
+  font-size: 0.7rem; font-weight: 600; padding: 2px 9px; border-radius: 20px;
+}
+
+/* ══════════════════════════════════
+   RESOURCES PAGE
+══════════════════════════════════ */
+.resources-hero {
+  background: linear-gradient(135deg, var(--navy2), #1a3060);
+  padding: 56px 24px 48px; text-align: center;
+}
+.resources-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.4rem; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.resources-hero p { color: #8fa8c8; font-size: 0.92rem; }
+
+.resources-body { max-width: 1200px; margin: 0 auto; padding: 48px 24px 64px; }
+
+.res-section { margin-bottom: 52px; }
+.res-section-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--navy);
+  margin-bottom: 6px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--gray-200);
+}
+.res-section-sub { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 20px; }
+
+.video-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.video-card {
+  background: #fff; border-radius: 10px;
+  border: 1px solid var(--gray-200);
+  overflow: hidden; cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.video-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.video-thumb {
+  position: relative; background: var(--navy);
+  aspect-ratio: 16/9; overflow: hidden;
+}
+.video-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.video-thumb-bg {
+  width: 100%; aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+}
+.play-btn {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.play-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--cf-red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; box-shadow: 0 4px 20px rgba(200,32,42,.5);
+  transition: transform 0.15s;
+}
+.video-card:hover .play-circle { transform: scale(1.1); }
+.video-info { padding: 14px 16px; }
+.video-brand {
+  font-size: 0.62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px;
+}
+.video-brand.mc { color: var(--cf-blue-lt); }
+.video-brand.cf { color: var(--cf-red); }
+.video-title { font-size: 0.85rem; font-weight: 600; color: var(--navy); line-height: 1.4; }
+.video-desc { font-size: 0.73rem; color: var(--gray-600); margin-top: 4px; }
+
+/* included section */
+.included-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.included-item {
+  background: #fff; border-radius: 9px;
+  border: 1px solid var(--gray-200);
+  padding: 18px 16px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.inc-icon {
+  width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+  background: #f0f5ff; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.inc-name { font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-bottom: 2px; }
+.inc-desc { font-size: 0.73rem; color: var(--gray-600); line-height: 1.5; }
+
+/* ══════════════════════════════════
+   CONTACT PAGE
+══════════════════════════════════ */
+.contact-hero {
+  background: linear-gradient(135deg, var(--navy2), #1a3060);
+  padding: 56px 24px 48px; text-align: center;
+}
+.contact-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.4rem; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.contact-hero p { color: #8fa8c8; font-size: 0.92rem; }
+
+.contact-body {
+  max-width: 1100px; margin: 0 auto; padding: 48px 24px 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+.contact-info { display: flex; flex-direction: column; gap: 20px; }
+.contact-card {
+  background: #fff; border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.contact-card-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: #fff0f0; display: flex; align-items: center;
+  justify-content: center; font-size: 1.3rem; margin-bottom: 12px;
+}
+.contact-card h3 {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
+  font-size: 1rem; color: var(--navy); margin-bottom: 4px;
+}
+.contact-card p { font-size: 0.82rem; color: var(--gray-600); line-height: 1.6; }
+.contact-card a {
+  color: var(--cf-red); font-weight: 600; font-size: 0.9rem;
+  display: block; margin-top: 8px;
+}
+.contact-card a:hover { color: var(--cf-red2); }
+
+/* form */
+.contact-form-wrap {
+  background: #fff; border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  padding: 28px; box-shadow: var(--shadow);
+}
+.contact-form-wrap h2 {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
+  font-size: 1.3rem; color: var(--navy); margin-bottom: 20px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-size: 0.78rem; font-weight: 600;
+  color: var(--gray-600); margin-bottom: 6px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 10px 14px;
+  border: 1px solid var(--gray-200); border-radius: 7px;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--gray-800);
+  background: var(--gray-50); transition: border-color 0.15s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--cf-blue-lt);
+  background: #fff;
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-submit {
+  width: 100%; padding: 12px;
+  background: var(--cf-red); color: #fff;
+  border: none; border-radius: 7px;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+  box-shadow: 0 3px 14px rgba(200,32,42,.3);
+}
+.form-submit:hover { background: var(--cf-red2); }
+.form-success {
+  display: none; text-align: center; padding: 24px;
+  color: #166534; background: #dcfce7;
+  border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+}
+
+/* ══════════════════════════════════
+   FINANCING PAGE
+══════════════════════════════════ */
+
+.financing-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.4rem; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.financing-hero p { color: #8fa8c8; font-size: 0.92rem; }
+
+
+
+.fin-card h3 {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
+  font-size: 1.2rem; color: var(--navy); margin-bottom: 8px;
+}
+.fin-card 
+.fin-card 
+
+.fin-list li { font-size: 0.82rem; color: var(--gray-600); padding-left: 20px; position: relative; }
+.fin-list li::before { content: '✓'; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
+
+.fin-btn:hover { background: var(--cf-red2); }
+
+/* ══════════════════════════════════
+   SHARED FOOTER
+══════════════════════════════════ */
+.site-footer {
+  background: var(--navy2);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 40px 24px 24px;
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  margin-bottom: 32px;
+}
+.footer-brand img { height: 36px; width: auto; margin-bottom: 12px; mix-blend-mode: screen; }
+.footer-brand p { font-size: 0.78rem; color: #6888a8; line-height: 1.7; max-width: 260px; }
+.footer-col h4 {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
+  font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #c8d8f0; margin-bottom: 12px;
+}
+.footer-col a, .footer-col button {
+  display: block; font-size: 0.78rem; color: #6888a8;
+  margin-bottom: 7px; cursor: pointer;
+  background: none; border: none; text-align: left; padding: 0;
+  transition: color 0.15s;
+}
+.footer-col a:hover, .footer-col button:hover { color: #c8d8f0; }
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding-top: 20px; display: flex;
+  justify-content: space-between; align-items: center;
+  font-size: 0.72rem; color: #4a6080; flex-wrap: wrap; gap: 8px;
+}
+
+/* ══════════════════════════════════
+   TRUST BAR
+══════════════════════════════════ */
+.trust-bar {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: 20px 24px;
+}
+.trust-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  color: #8fa8c8; font-size: 0.78rem;
+}
+.trust-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,.07); display: flex;
+  align-items: center; justify-content: center; font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.trust-label { font-weight: 600; color: #c8d8f0; display: block; font-size: 0.8rem; }
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 900px) {
+  .cat-grid { grid-template-columns: repeat(2,1fr); }
+  .why-inner { grid-template-columns: 1fr; }
+  .why-img-col { display: none; }
+  .shop-col-hdr, .model-pair { grid-template-columns: 1fr; }
+  .video-grid, .included-grid { grid-template-columns: 1fr 1fr; }
+  .contact-body { grid-template-columns: 1fr; }
+  
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hero-brands { grid-template-columns: 1fr auto 1fr; }
+  .cat-grid { grid-template-columns: repeat(2,1fr); }
+  .video-grid, .included-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brands">
+      <button class="nav-brand-btn" onclick="openExternal('https://www.mrcool.com')" title="Shop MRCOOL.com">
+        <img src="logo-mrcooldepo.png" alt="MrCool Depo"/>
+      </button>
+      <div class="nav-divider"></div>
+      <button class="nav-brand-btn" onclick="openExternal('https://climateforge.myshopify.com')" title="Shop ClimateForge">
+        <img src="logo-climateforge.png" alt="ClimateForge"/>
+      </button>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('home',this)">Home</button>
+      <button class="nav-link" onclick="showPage('shop',this)">Shop</button>
+      <button class="nav-link" onclick="showPage('compare',this)">Compare</button>
+      <button class="nav-link" onclick="showPage('resources',this)">Resources</button>
+      <button class="nav-link" onclick="showPage('contact',this)">Contact</button>
+    </div>
+    <button class="nav-cta" onclick="showPage('contact', document.querySelector('.nav-link:last-of-type'))">Get a Quote</button>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════
+     HOME PAGE
+════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <section class="home-hero">
+    <div class="hero-eyebrow">Authorized MRCOOL® Dealer · ClimateForge™ Distributor</div>
+    <h1 class="hero-h1">The Smart Way to Buy<br/><span>HVAC Equipment Online</span></h1>
+    <p class="hero-sub">Top brand name or better value — we carry both so you can choose confidently. Same quality, same warranty, different price points.</p>
+    <div class="hero-btns">
+      <button class="hero-btn primary" onclick="showPage('shop', document.querySelectorAll('.nav-link')[1])">Shop Systems</button>
+      <button class="hero-btn secondary" onclick="showPage('compare', document.querySelectorAll('.nav-link')[2])">Help Me Choose</button>
+    </div>
+    <div class="hero-brands">
+      <div class="hero-brand-card" onclick="openExternal('https://www.mrcool.com')">
+        <img src="logo-mrcooldepo.png" alt="MrCool Depo"/>
+        <div class="hero-brand-label">
+          <strong>MRCOOL® Systems</strong>
+          National brand · DIY-friendly · Trusted nationwide
+        </div>
+        <div class="hero-brand-arrow">Shop MRCOOL →</div>
+      </div>
+      <div class="hero-vs"><div class="vs-circle">VS</div></div>
+      <div class="hero-brand-card" onclick="openExternal('https://climateforge.myshopify.com')">
+        <img src="logo-climateforge.png" alt="ClimateForge"/>
+        <div class="hero-brand-label">
+          <strong>ClimateForge™ Systems</strong>
+          Contractor-grade · Better value · Full bundle included
+        </div>
+        <div class="hero-brand-arrow">Shop ClimateForge →</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories">
+    <div class="section-hdr">
+      <div class="section-eyebrow">Browse by Category</div>
+      <div class="section-title">Find Your Perfect System</div>
+      <div class="section-sub">Mini splits, heat pumps, central systems — every climate, every budget.</div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="showPage('shop', document.querySelectorAll('.nav-link')[1])">
+        <div class="cat-icon">🌡️</div>
+        <div class="cat-name">MRCOOL Mini Splits</div>
+        <div class="cat-desc">DIY-friendly units. Pre-charged lines, WiFi included, no HVAC license needed.</div>
+      </div>
+      <div class="cat-card" onclick="openExternal('https://climateforge.myshopify.com')">
+        <div class="cat-icon">❄️</div>
+        <div class="cat-name">ClimateForge™ Mini Splits</div>
+        <div class="cat-desc">Contractor-grade alternative. Better value, full bundle, competitive warranty.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('shop', document.querySelectorAll('.nav-link')[1])">
+        <div class="cat-icon">🏠</div>
+        <div class="cat-name">Heat Pumps</div>
+        <div class="cat-desc">Year-round heating and cooling. Cold-climate models down to −13°F.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('shop', document.querySelectorAll('.nav-link')[1])">
+        <div class="cat-icon">🔧</div>
+        <div class="cat-name">DIY Systems</div>
+        <div class="cat-desc">Install it yourself in hours. No special tools or license required.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-section">
+    <div class="why-inner">
+      <div class="why-text">
+        <div class="section-eyebrow">Why Choose Us</div>
+        <div class="section-title" style="color:#fff;">Brand Name or Better Value?<br/>We offer both.</div>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-dot">✓</div>
+            <div class="why-item-text">
+              <strong>Authorized Dealer for Both Brands</strong>
+              <span>Genuine units with full manufacturer warranty on every order.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-dot">✓</div>
+            <div class="why-item-text">
+              <strong>Everything Bundled in One Order</strong>
+              <span>Air handler, condenser, line set, drain hose, accessories — all included.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-dot">✓</div>
+            <div class="why-item-text">
+              <strong>DIY or Pro Installation</strong>
+              <span>Install it yourself with our video guides, or hire a local pro. Either works.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-dot">✓</div>
+            <div class="why-item-text">
+              <strong>Nationwide Freight Delivery</strong>
+              <span>Shipped to your door on a pallet. Fast, safe, trackable.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-img-col">
+        <div class="why-img-box">
+          <img src="page-whats-included.png" alt="What's included" style="max-height:340px; object-fit:contain;"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item"><div class="trust-icon">🌡️</div><div><span class="trust-label">All Climates</span>Hot, average, or cold — we have the right BTU.</div></div>
+      <div class="trust-item"><div class="trust-icon">🚛</div><div><span class="trust-label">Nationwide Shipping</span>Freight delivery to your door.</div></div>
+      <div class="trust-item"><div class="trust-icon">🛡️</div><div><span class="trust-label">Full Warranty</span>7-yr compressor on every unit.</div></div>
+      <div class="trust-item"><div class="trust-icon">💬</div><div><span class="trust-label">Real Support</span>Email us — real answers, fast.</div></div>
+    </div>
+  </div>
+
+</div><!-- /home -->
+
+
+<!-- ════════════════════════════════
+     SHOP PAGE
+════════════════════════════════ -->
+<div id="page-shop" class="page">
+
+  <div class="shop-hero">
+    <h1>Shop <span>Mini Split</span> Systems</h1>
+    <p>MRCOOL® on the left · ClimateForge™ on the right · Same performance, your choice of brand</p>
+  </div>
+
+  <div class="shop-col-hdr">
+    <div class="col-label mrcool">
+      <img src="logo-mrcooldepo.png" alt="MrCool Depo"/>
+      <div class="col-label-text"><strong>MRCOOL® DIY 5th Gen</strong>National brand · mrcool.com pricing</div>
+    </div>
+    <div class="col-label cf">
+      <img src="logo-climateforge.png" alt="ClimateForge"/>
+      <div class="col-label-text"><strong>ClimateForge™</strong>~10% savings · Full bundle included</div>
+    </div>
+  </div>
+
+  <div class="shop-models">
+
+    <div class="model-divider">9,000 BTU — Up to 350 sq ft</div>
+    <div class="model-pair">
+      <div class="m-card mrcool">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.parentElement.innerHTML='<div style=\'text-align:center;color:#94a3b8;font-size:.75rem;padding:8px\'>MRCOOL<br/>9K</div>'" alt="MRCOOL 9K"/></div>
+          <div class="m-title"><div class="m-btu">9,000 BTU</div><div class="m-sub">DIY® 5th Gen · Single Zone · 115V</div></div>
+          <div class="m-price"><span class="m-type">MSRP</span><span class="m-now">$949</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">20.2</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 350 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Line Set</span><span class="m-spec-v">16 ft pre-charged</span></div>
+            <div class="m-spec"><span class="m-spec-k">Voltage</span><span class="m-spec-v">115V</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">WiFi/App</span><span class="m-tag">Heat Pump</span><span class="m-tag">DIY Install</span></div>
+        </div>
+        <div class="m-foot"><a href="https://www.mrcool.com/product/diy-5th-generation" target="_blank" class="m-btn btn-mrcool">Buy on MRCOOL.com →</a></div>
+      </div>
+      <div class="m-card cf-card">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="9K BTU Mini Split"/></div>
+          <div class="m-title"><div class="m-btu">9,000 BTU</div><div class="m-sub">ClimateForge™ · Single Zone · 115V</div></div>
+          <div class="m-price"><span class="m-was">$949</span><span class="m-now">$854</span><span class="m-save">Save $95</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">20.2</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 350 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Bundle</span><span class="m-spec-v">Full kit included</span></div>
+            <div class="m-spec"><span class="m-spec-k">Voltage</span><span class="m-spec-v">115V</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Full Bundle</span><span class="m-tag">Heat Pump</span><span class="m-tag">Best Value</span></div>
+        </div>
+        <div class="m-foot"><a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf">Shop ClimateForge →</a></div>
+      </div>
+    </div>
+
+    <div class="model-divider">12,000 BTU — Up to 500 sq ft</div>
+    <div class="model-pair">
+      <div class="m-card mrcool">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.parentElement.innerHTML=''" alt="MRCOOL 12K"/></div>
+          <div class="m-title"><div class="m-btu">12,000 BTU</div><div class="m-sub">DIY® 5th Gen · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-type">MSRP</span><span class="m-now">$1,099</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">21.5</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 500 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Line Set</span><span class="m-spec-v">25 ft pre-charged</span></div>
+            <div class="m-spec"><span class="m-spec-k">Cert.</span><span class="m-spec-v">Energy Star®</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Energy Star®</span><span class="m-tag">Follow Me®</span><span class="m-tag">WiFi/App</span></div>
+        </div>
+        <div class="m-foot"><a href="https://www.mrcool.com/product/diy-5th-generation" target="_blank" class="m-btn btn-mrcool">Buy on MRCOOL.com →</a></div>
+      </div>
+      <div class="m-card cf-card">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="12K BTU Mini Split"/></div>
+          <div class="m-title"><div class="m-btu">12,000 BTU</div><div class="m-sub">ClimateForge™ · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-was">$1,099</span><span class="m-now">$989</span><span class="m-save">Save $110</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">21.5</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 500 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Bundle</span><span class="m-spec-v">Full kit included</span></div>
+            <div class="m-spec"><span class="m-spec-k">Cert.</span><span class="m-spec-v">Energy Star®</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Full Bundle</span><span class="m-tag">Heat Pump</span><span class="m-tag">Best Value</span></div>
+        </div>
+        <div class="m-foot"><a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf">Shop ClimateForge →</a></div>
+      </div>
+    </div>
+
+    <div class="model-divider">18,000 BTU — Up to 750 sq ft</div>
+    <div class="model-pair">
+      <div class="m-card mrcool">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.parentElement.innerHTML=''" alt="MRCOOL 18K"/></div>
+          <div class="m-title"><div class="m-btu">18,000 BTU</div><div class="m-sub">DIY® 5th Gen · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-type">MSRP</span><span class="m-now">$1,299</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">21.5</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 750 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Min. Heat</span><span class="m-spec-v">−13°F</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">−13°F Heat</span><span class="m-tag">Gold Fin®</span><span class="m-tag">Energy Star®</span></div>
+        </div>
+        <div class="m-foot"><a href="https://www.mrcool.com/product/diy-5th-generation" target="_blank" class="m-btn btn-mrcool">Buy on MRCOOL.com →</a></div>
+      </div>
+      <div class="m-card cf-card">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="18K BTU Mini Split"/></div>
+          <div class="m-title"><div class="m-btu">18,000 BTU</div><div class="m-sub">ClimateForge™ · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-was">$1,299</span><span class="m-now">$1,169</span><span class="m-save">Save $130</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">21.5</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 750 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Bundle</span><span class="m-spec-v">Full kit included</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Full Bundle</span><span class="m-tag">−13°F Heat</span><span class="m-tag">Best Value</span></div>
+        </div>
+        <div class="m-foot"><a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf">Shop ClimateForge →</a></div>
+      </div>
+    </div>
+
+    <div class="model-divider">24,000 BTU — Up to 1,000 sq ft</div>
+    <div class="model-pair">
+      <div class="m-card mrcool">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.parentElement.innerHTML=''" alt="MRCOOL 24K"/></div>
+          <div class="m-title"><div class="m-btu">24,000 BTU</div><div class="m-sub">DIY® 5th Gen · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-type">MSRP</span><span class="m-now">$1,549</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">22.7</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 1,000 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Corrosion</span><span class="m-spec-v">Gold Fin® coated</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">22.7 SEER2</span><span class="m-tag">Gold Fin®</span><span class="m-tag">Coastal Ready</span></div>
+        </div>
+        <div class="m-foot"><a href="https://www.mrcool.com/product/diy-5th-generation" target="_blank" class="m-btn btn-mrcool">Buy on MRCOOL.com →</a></div>
+      </div>
+      <div class="m-card cf-card">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="24K BTU Mini Split"/></div>
+          <div class="m-title"><div class="m-btu">24,000 BTU</div><div class="m-sub">ClimateForge™ · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-was">$1,549</span><span class="m-now">$1,394</span><span class="m-save">Save $155</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">22.7</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 1,000 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Bundle</span><span class="m-spec-v">Full kit included</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Full Bundle</span><span class="m-tag">22.7 SEER2</span><span class="m-tag">Best Value</span></div>
+        </div>
+        <div class="m-foot"><a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf">Shop ClimateForge →</a></div>
+      </div>
+    </div>
+
+    <div class="model-divider">36,000 BTU — Up to 1,500 sq ft</div>
+    <div class="model-pair">
+      <div class="m-card mrcool">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.parentElement.innerHTML=''" alt="MRCOOL 36K"/></div>
+          <div class="m-title"><div class="m-btu">36,000 BTU</div><div class="m-sub">DIY® 5th Gen · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-type">MSRP</span><span class="m-now">$1,899</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">19.2</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 1,500 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Capacity</span><span class="m-spec-v">3-ton equiv.</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Large Space</span><span class="m-tag">3-Ton</span><span class="m-tag">WiFi/App</span></div>
+        </div>
+        <div class="m-foot"><a href="https://www.mrcool.com/product/diy-5th-generation" target="_blank" class="m-btn btn-mrcool">Buy on MRCOOL.com →</a></div>
+      </div>
+      <div class="m-card cf-card">
+        <div class="m-card-top">
+          <div class="m-img"><img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="36K BTU Mini Split"/></div>
+          <div class="m-title"><div class="m-btu">36,000 BTU</div><div class="m-sub">ClimateForge™ · Single Zone · 230V</div></div>
+          <div class="m-price"><span class="m-was">$1,899</span><span class="m-now">$1,709</span><span class="m-save">Save $190</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-specs">
+            <div class="m-spec"><span class="m-spec-k">SEER2</span><span class="m-spec-v">19.2</span></div>
+            <div class="m-spec"><span class="m-spec-k">Coverage</span><span class="m-spec-v">Up to 1,500 sq ft</span></div>
+            <div class="m-spec"><span class="m-spec-k">Bundle</span><span class="m-spec-v">Full kit included</span></div>
+            <div class="m-spec"><span class="m-spec-k">Warranty</span><span class="m-spec-v">7-yr compressor</span></div>
+          </div>
+          <div class="m-tags"><span class="m-tag">Full Bundle</span><span class="m-tag">Large Space</span><span class="m-tag">Best Value</span></div>
+        </div>
+        <div class="m-foot"><a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf">Shop ClimateForge →</a></div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /shop -->
+
+
+<!-- ════════════════════════════════
+     COMPARE PAGE
+════════════════════════════════ -->
+<div id="page-compare" class="page">
+  <div class="compare-hero">
+    <h1>MRCOOL® vs ClimateForge™</h1>
+    <p>Which HVAC brand is right for you? Compare side by side.</p>
+    <div class="compare-units">
+      <div class="compare-unit">
+        <img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_400/v1719565690/4th_diy_thumb_25ade053a9.webp" onerror="this.style.display='none'" alt="MRCOOL"/>
+        <div class="compare-unit-name">MRCOOL®</div>
+      </div>
+      <div style="display:flex;align-items:center;padding-bottom:28px;">
+        <div class="compare-vs-badge">VS</div>
+      </div>
+      <div class="compare-unit">
+        <img src="https://res.cloudinary.com/dbkbadq4w/image/upload/q_auto,f_auto,w_300/v1719565690/4th_diy_thumb_25ade053a9.webp" alt="ClimateForge" style="height:160px;object-fit:contain;"/>
+        <div class="compare-unit-name">ClimateForge™</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-table-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Feature</th>
+          <th class="mc-hdr"><img src="logo-mrcooldepo.png" onerror="this.style.display='none'" alt="MrCool Depo"/>MRCOOL®</th>
+          <th class="cf-hdr"><img src="logo-climateforge.png" onerror="this.style.display='none'" alt="ClimateForge"/>ClimateForge™</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Brand Type</td><td class="mc-col">National consumer brand</td><td class="cf-col"><span class="tag-good">Contractor-grade value</span></td></tr>
+        <tr><td>Target Buyer</td><td class="mc-col">DIY homeowners</td><td class="cf-col">Value-focused buyers & contractors</td></tr>
+        <tr><td>Installation</td><td class="mc-col"><span class="check">✓</span> DIY or Pro</td><td class="cf-col"><span class="check">✓</span> DIY-friendly & Pro</td></tr>
+        <tr><td>System Types</td><td class="mc-col">Mini-splits, heat pumps</td><td class="cf-col">Mini-splits, heat pumps</td></tr>
+        <tr><td>Efficiency</td><td class="mc-col">High (up to 22.7 SEER2)</td><td class="cf-col"><span class="tag-good">Comparable efficiency</span></td></tr>
+        <tr><td>Warranty</td><td class="mc-col">Manufacturer (7-yr comp.)</td><td class="cf-col"><span class="tag-good">Competitive private-label</span></td></tr>
+        <tr><td>Bundle Included</td><td class="mc-col"><span class="tag-warn">Some systems only</span></td><td class="cf-col"><span class="tag-good">Full bundle every order</span></td></tr>
+        <tr><td>Price vs. Retail</td><td class="mc-col">Standard retail pricing</td><td class="cf-col"><span class="tag-good">~10% below for same performance</span></td></tr>
+        <tr><td>Inventory</td><td class="mc-col">Can fluctuate</td><td class="cf-col"><span class="tag-good">Controlled stock</span></td></tr>
+        <tr><td>WiFi / App Control</td><td class="mc-col"><span class="check">✓</span> SmartHVAC app</td><td class="cf-col"><span class="check">✓</span> Included</td></tr>
+        <tr><td>Where to Buy</td><td class="mc-col">mrcool.com</td><td class="cf-col">climateforge.myshopify.com</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:center;margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://www.mrcool.com" target="_blank" class="m-btn btn-mrcool" style="display:inline-block;padding:11px 28px;border-radius:7px;font-size:.85rem;font-weight:600;text-decoration:none;">Shop MRCOOL® →</a>
+      <a href="https://climateforge.myshopify.com" target="_blank" class="m-btn btn-cf" style="display:inline-block;padding:11px 28px;border-radius:7px;font-size:.85rem;font-weight:600;text-decoration:none;">Shop ClimateForge™ →</a>
+    </div>
+  </div>
+</div><!-- /compare -->
+
+
+<!-- ════════════════════════════════
+     RESOURCES PAGE
+════════════════════════════════ -->
+<div id="page-resources" class="page">
+  <div class="resources-hero">
+    <h1>Installation Resources</h1>
+    <p>Expert video guides for DIY installers and professionals. Everything you need to get up and running.</p>
+  </div>
+
+  <div class="resources-body">
+
+    <div class="res-section">
+      <div class="res-section-title">📺 Watch Installation Videos</div>
+      <div class="res-section-sub">Step-by-step guides for both MRCOOL® and ClimateForge™ systems.</div>
+      <div class="video-grid">
+        <a href="https://www.youtube.com/results?search_query=mrcool+diy+mini+split+install" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">🔧</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand mc">MRCOOL®</div><div class="video-title">Full DIY Mini Split Installation</div><div class="video-desc">Step-by-step from unboxing to first cool blast.</div></div>
+        </a>
+        <a href="https://www.youtube.com/results?search_query=mini+split+refrigerant+lines+connect" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">❄️</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand mc">MRCOOL®</div><div class="video-title">How to Connect Refrigerant Lines</div><div class="video-desc">Properly flare and connect your line set safely.</div></div>
+        </a>
+        <a href="https://www.youtube.com/results?search_query=mini+split+vacuum+test+system" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">🌀</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand mc">MRCOOL®</div><div class="video-title">How to Vacuum & Test Your System</div><div class="video-desc">Pressure testing before charging. Don't skip this.</div></div>
+        </a>
+        <a href="https://www.youtube.com/results?search_query=climateforge+mini+split+install" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">🏠</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand cf">ClimateForge™</div><div class="video-title">ClimateForge™ DIY Install Guide</div><div class="video-desc">Step-by-step guide specific to ClimateForge systems.</div></div>
+        </a>
+        <a href="https://www.youtube.com/results?search_query=mini+split+electrical+wiring" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">⚡</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand cf">ClimateForge™</div><div class="video-title">Electrical Wiring for Mini Splits</div><div class="video-desc">Breaker sizing, disconnect boxes, and safe wiring.</div></div>
+        </a>
+        <a href="https://www.youtube.com/results?search_query=mini+split+prep+lines+charge" target="_blank" class="video-card">
+          <div class="video-thumb"><div class="video-thumb-bg">🔩</div><div class="play-btn"><div class="play-circle">▶</div></div></div>
+          <div class="video-info"><div class="video-brand cf">ClimateForge™</div><div class="video-title">How to Prep Lines & Charge the System</div><div class="video-desc">Final commissioning steps for a perfect startup.</div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">📦 What's Included with Your Order</div>
+      <div class="res-section-sub">Every ClimateForge™ system ships as a complete bundle — nothing extra to buy.</div>
+      <div class="included-grid">
+        <div class="included-item"><div class="inc-icon">❄️</div><div><div class="inc-name">Mini Split Air Handler</div><div class="inc-desc">Indoor wall-mounted unit. Quiet, precise, controllable to the degree.</div></div></div>
+        <div class="included-item"><div class="inc-icon">🌀</div><div><div class="inc-name">Outdoor Condenser</div><div class="inc-desc">ClimateForge™ branded condenser. Matched to your air handler BTU.</div></div></div>
+        <div class="included-item"><div class="inc-icon">🔗</div><div><div class="inc-name">Insulated Line Set</div><div class="inc-desc">Pre-insulated copper tubing ready to connect. Sized for your unit.</div></div></div>
+        <div class="included-item"><div class="inc-icon">💧</div><div><div class="inc-name">Drain Hose</div><div class="inc-desc">Condensate drain line included. No extra trips to the hardware store.</div></div></div>
+        <div class="included-item"><div class="inc-icon">📡</div><div><div class="inc-name">Remote Control</div><div class="inc-desc">Wireless remote with Follow Me® style sensor for personalized comfort.</div></div></div>
+        <div class="included-item"><div class="inc-icon">🔧</div><div><div class="inc-name">Accessory Kit</div><div class="inc-desc">Electrical fittings, drain whip, mounting hardware — all in one bag.</div></div></div>
+      </div>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">📐 Sizing Help</div>
+      <div class="res-section-sub">Not sure what BTU you need? Use these guidelines.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
+        <div class="included-item" style="flex-direction:column;gap:4px;text-align:center;">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cf-blue);">9K BTU</div>
+          <div style="font-size:.78rem;color:var(--gray-600);">Up to 350 sq ft<br/>Small room / office</div>
+        </div>
+        <div class="included-item" style="flex-direction:column;gap:4px;text-align:center;">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cf-blue);">12K BTU</div>
+          <div style="font-size:.78rem;color:var(--gray-600);">Up to 500 sq ft<br/>Bedroom / studio</div>
+        </div>
+        <div class="included-item" style="flex-direction:column;gap:4px;text-align:center;">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cf-blue);">18K BTU</div>
+          <div style="font-size:.78rem;color:var(--gray-600);">Up to 750 sq ft<br/>Living room / garage</div>
+        </div>
+        <div class="included-item" style="flex-direction:column;gap:4px;text-align:center;">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cf-blue);">24K BTU</div>
+          <div style="font-size:.78rem;color:var(--gray-600);">Up to 1,000 sq ft<br/>Open plan / addition</div>
+        </div>
+        <div class="included-item" style="flex-direction:column;gap:4px;text-align:center;">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--cf-blue);">36K BTU</div>
+          <div style="font-size:.78rem;color:var(--gray-600);">Up to 1,500 sq ft<br/>Large space / whole floor</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /resources -->
+
+
+<!-- ════════════════════════════════
+     CONTACT PAGE
+════════════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="contact-hero">
+    <h1>Get in Touch</h1>
+    <p>Have a question about sizing, ordering, or installation? We're here to help.</p>
+  </div>
+
+  <div class="contact-body">
+    <div class="contact-info">
+      <div class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <h3>Email Us</h3>
+        <p>We respond to all inquiries within one business day. Ask us anything — sizing, pricing, installation, or a custom quote.</p>
+        <a href="mailto:mrcooldepo@gmail.com">mrcooldepo@gmail.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🛒</div>
+        <h3>Shop ClimateForge™ Direct</h3>
+        <p>Ready to order? Visit our Shopify store for the full ClimateForge™ lineup with secure checkout.</p>
+        <a href="https://climateforge.myshopify.com" target="_blank">climateforge.myshopify.com →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🔵</div>
+        <h3>Shop MRCOOL® Systems</h3>
+        <p>Prefer the MRCOOL® brand? Browse the full DIY lineup on their official website.</p>
+        <a href="https://www.mrcool.com" target="_blank">mrcool.com →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">📦</div>
+        <h3>Shipping & Freight</h3>
+        <p>All orders ship nationwide via freight delivery. Systems arrive on a pallet, right to your door. Lead time is typically 3–7 business days.</p>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <h2>Send Us a Message</h2>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="John"/></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@example.com"/></div>
+      <div class="form-group"><label>What are you interested in?</label>
+        <select>
+          <option>ClimateForge™ System</option>
+          <option>MRCOOL® System</option>
+          <option>Sizing Help</option>
+          <option>Installation Question</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>BTU Size Needed (if known)</label>
+        <select>
+          <option>Not sure — need help</option>
+          <option>9,000 BTU (~350 sq ft)</option>
+          <option>12,000 BTU (~500 sq ft)</option>
+          <option>18,000 BTU (~750 sq ft)</option>
+          <option>24,000 BTU (~1,000 sq ft)</option>
+          <option>36,000 BTU (~1,500 sq ft)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your space, project, or questions..."></textarea></div>
+      <button class="form-submit" onclick="submitForm()">Send Message →</button>
+      <div class="form-success" id="formSuccess">✓ Message sent! We'll get back to you within one business day at mrcooldepo@gmail.com</div>
+    </div>
+  </div>
+</div><!-- /contact -->
+
+
+<!-- ════════════════════════════════
+     FINANCING PAGE
+════════════════════════════════ -->
+
+
+
+<!-- ════════════════════════════════
+     SHARED FOOTER
+════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logo-climateforge.png" onerror="this.style.display='none'" alt="ClimateForge"/>
+      <p>Authorized dealer for MRCOOL® and distributor of ClimateForge™ mini split systems. Nationwide freight delivery, full warranty on every unit.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <button onclick="showPage('shop', document.querySelectorAll('.nav-link')[1])">All Systems</button>
+      <a href="https://www.mrcool.com" target="_blank">MRCOOL® Store</a>
+      <a href="https://climateforge.myshopify.com" target="_blank">ClimateForge™ Store</a>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <button onclick="showPage('resources', document.querySelectorAll('.nav-link')[3])">Installation Videos</button>
+      <button onclick="showPage('resources', document.querySelectorAll('.nav-link')[3])">Sizing Guide</button>
+      <button onclick="showPage('compare', document.querySelectorAll('.nav-link')[2])">Brand Comparison</button>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:mrcooldepo@gmail.com">mrcooldepo@gmail.com</a>
+      <button onclick="showPage('contact', document.querySelectorAll('.nav-link')[5])">Send a Message</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 ClimateForge™. All rights reserved. MRCOOL® is a registered trademark of MRCOOL®.</span>
+    <span>Authorized MRCOOL® Dealer · ClimateForge™ Distributor</span>
+  </div>
+</footer>
+
+<script>
+function showPage(id, linkEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (linkEl) linkEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openExternal(url) {
+  window.open(url, '_blank');
+}
+
+function submitForm() {
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 800);
+}
+</script>
+
+</body>
+</html>
